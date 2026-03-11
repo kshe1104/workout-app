@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+    // ❌ com.ewerk.gradle.plugins.querydsl 플러그인 제거
+    // → Gradle 8.x 와 호환되지 않아 "Could not find class file" 오류 발생
+    // → Spring Boot 3.x 에서는 annotationProcessor 방식이 표준
+}
+
+group = 'com.workout'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // ── Spring Boot 핵심 ──────────────────────────────────────────
+    // REST API 컨트롤러, Jackson(JSON 변환), Tomcat 내장 서버 포함
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // Spring Security: 인증(로그인) + 인가(권한 체크) 프레임워크
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // JPA (ORM): 자바 객체 ↔ DB 테이블 자동 매핑
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // @Valid, @NotNull 등 입력값 검증 어노테이션 사용
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // ── 데이터베이스 ──────────────────────────────────────────────
+    // MySQL 드라이버: Java ↔ MySQL 통신 담당
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // H2: 테스트용 인메모리 DB (실제 MySQL 없이 테스트 가능)
+    runtimeOnly 'com.h2database:h2'
+
+    // ── JWT (JSON Web Token) ──────────────────────────────────────
+    // JWT 토큰 생성/파싱/검증 라이브러리
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+
+    // ── QueryDSL ─────────────────────────────────────────────────
+    // 타입 안전한 동적 쿼리 작성 (JPA만으로 어려운 복잡한 쿼리 처리)
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+
+    // Q클래스 자동 생성 방식 (Gradle 8.x + Spring Boot 3.x 표준 방식)
+    // annotationProcessor: 컴파일 시 @Entity 클래스를 읽어서 QUser, QWorkoutLog 등 자동 생성
+    // ewerk 플러그인 없이 이 세 줄만으로 동작함
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+    annotationProcessor 'jakarta.annotation:jakarta.annotation-api'
+    annotationProcessor 'jakarta.persistence:jakarta.persistence-api'
+
+    // ── 편의 도구 ─────────────────────────────────────────────────
+    // @Getter, @Setter, @Builder 등으로 반복 코드 자동 생성
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // 테스트 라이브러리 (JUnit5, MockMvc 등)
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+// ── QueryDSL Q클래스 생성 경로 설정 ──────────────────────────────
+// [ewerk 플러그인 없이 Q클래스 생성하는 방법]
+// build/generated/sources/annotationProcessor 경로에 자동 생성됨
+// 별도 sourceSets 설정 없이 Gradle이 자동으로 소스 경로에 포함시켜 줌
+// → 이전의 querydsl { }, compileQuerydsl { }, configurations { querydsl... } 블록 모두 불필요
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
