@@ -1,0 +1,93 @@
+/* ── WorkoutCalendar.module.css ────────────────────────────── */
+.calendar { padding: 1.25rem; }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.title { font-size: 1.1rem; font-weight: 700; }
+.navBtn {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  color: var(--color-text-secondary);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.navBtn:hover { background: var(--color-bg); }
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 0.5rem;
+}
+.weekday {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  padding: 0.3rem 0;
+}
+
+.grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.loading { text-align: center; padding: 2rem; color: var(--color-text-secondary); }
+
+.emptyCell { min-height: 56px; }
+
+.dayCell {
+  min-height: 56px;
+  border-radius: 8px;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background 0.15s;
+  position: relative;
+}
+.dayCell:hover { background: var(--color-bg); }
+
+.dayNumber {
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+/* 운동한 날 */
+.hasWorkout { background: var(--color-primary-light); }
+.hasWorkout:hover { background: #bbf7d0; }
+
+/* 오늘 */
+.today .dayNumber {
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* 선택된 날 */
+.selected {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+/* 부위 색상 점 */
+.bodyPartDots { display: flex; gap: 2px; flex-wrap: wrap; justify-content: center; }
+.dot { width: 6px; height: 6px; border-radius: 50%; display: block; }
+.moreDots { font-size: 0.65rem; color: var(--color-text-secondary); }
+
+/* 범례 */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+.legendItem { display: flex; align-items: center; gap: 4px; font-size: 0.75rem; color: var(--color-text-secondary); }
+.legendDot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }

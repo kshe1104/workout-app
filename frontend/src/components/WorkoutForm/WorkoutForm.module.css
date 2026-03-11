@@ -1,0 +1,318 @@
+/* ── WorkoutForm.module.css ─────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+/* 모달: flex column, 높이 고정 → 내부 scrollBody만 스크롤 */
+.modal {
+  background: white;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  height: 90vh;          /* 고정 높이 */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;      /* 모달 자체는 overflow 숨김 */
+}
+
+/* 헤더: 고정 */
+.header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  background: white;
+  z-index: 1;
+}
+.header h2 { font-size: 1.1rem; font-weight: 700; }
+.closeBtn { font-size: 1.2rem; color: var(--color-text-secondary); padding: 0.25rem; }
+.closeBtn:hover { color: var(--color-text); }
+
+/* 스크롤 본문: 남은 공간을 모두 차지하고 스크롤 */
+.scrollBody {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;         /* flex 자식이 shrink되도록 */
+}
+
+.section { padding: 1rem 1.5rem; border-bottom: 1px solid var(--color-border); }
+.sectionHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+.label { font-size: 0.875rem; font-weight: 600; }
+
+.textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: 8px;
+  resize: none;
+  font-size: 0.9rem;
+  outline: none;
+}
+.textarea:focus { border-color: var(--color-primary); }
+
+.addExerciseBtn {
+  padding: 0.4rem 0.9rem;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.addExerciseBtn:hover { background: var(--color-primary-dark); }
+
+/* 운동 블록 */
+.exerciseBlock {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+.exerciseBlockHeader { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.7rem; }
+.exerciseBlockName { font-weight: 600; font-size: 0.9rem; }
+.exerciseBlockBodyPart {
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  padding: 0.1rem 0.4rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  margin-left: 0.4rem;
+}
+.removeExerciseBtn { color: var(--color-danger); font-size: 0.9rem; }
+
+/* 세트 입력 테이블 */
+.setInputTable { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 0.5rem; }
+.setInputTable th {
+  text-align: center;
+  padding: 0.35rem;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-border);
+}
+.setInputTable td { text-align: center; padding: 0.3rem; }
+.setNumber { color: var(--color-text-secondary); font-size: 0.8rem; }
+
+.setInput {
+  width: 70px;
+  padding: 0.35rem 0.4rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: 6px;
+  text-align: center;
+  font-size: 0.85rem;
+  outline: none;
+}
+.setInput:focus { border-color: var(--color-primary); }
+
+.removeSetBtn { color: var(--color-danger); font-size: 0.85rem; }
+.addSetBtn {
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+}
+.addSetBtn:hover { text-decoration: underline; }
+
+/* ── 종목 피커 ── */
+.exercisePicker {
+  margin-top: 0.75rem;
+  border: 1.5px solid var(--color-primary);
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+}
+
+.pickerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: var(--color-primary-light);
+}
+.pickerHeader h3 { font-size: 0.9rem; font-weight: 600; }
+
+/* 전체 / 즐겨찾기 상단 탭 */
+.pickerTopTabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+}
+.pickerTopTab, .pickerTopTabActive {
+  flex: 1;
+  padding: 0.55rem 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  transition: background 0.15s, color 0.15s;
+}
+.pickerTopTab {
+  color: var(--color-text-secondary);
+  background: white;
+}
+.pickerTopTab:hover { background: var(--color-bg); }
+.pickerTopTabActive {
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  border-bottom: 2px solid var(--color-primary);
+}
+
+/* 부위 필터 탭 */
+.bodyPartTabs {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.6rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--color-border);
+}
+.tab, .activeTab {
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  border: 1.5px solid;
+}
+.tab { border-color: var(--color-border); color: var(--color-text-secondary); }
+.activeTab { border-color: var(--color-primary); background: var(--color-primary); color: white; }
+
+/* 종목 목록 */
+.exerciseList {
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+.emptyMsg {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.exerciseItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 1rem;
+  font-size: 0.875rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  transition: background 0.1s;
+}
+.exerciseItem:last-child { border-bottom: none; }
+.exerciseItem:hover { background: var(--color-bg); }
+
+.exerciseItemLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.exerciseItemBodyPart { font-size: 0.75rem; color: var(--color-text-secondary); }
+
+/* 별(즐겨찾기) 버튼 */
+.starBtn {
+  font-size: 1.05rem;
+  color: #ccc;
+  line-height: 1;
+  padding: 0 0.1rem;
+  transition: color 0.15s, transform 0.1s;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+.starBtn:hover { color: #f5a623; transform: scale(1.2); }
+.starActive { color: #f5a623 !important; }
+
+/* 직접 입력 토글 버튼 행 */
+.customToggleRow {
+  border-top: 1px solid var(--color-border);
+  padding: 0.5rem 1rem;
+}
+.customToggleBtn {
+  font-size: 0.82rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  width: 100%;
+  text-align: left;
+  padding: 0.2rem 0;
+}
+.customToggleBtn:hover { text-decoration: underline; }
+
+/* 직접 입력 영역 */
+.customInputArea {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+.customNameInput {
+  flex: 1;
+  min-width: 140px;
+  padding: 0.45rem 0.7rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  outline: none;
+}
+.customNameInput:focus { border-color: var(--color-primary); }
+
+.customBodyPartSelect {
+  padding: 0.45rem 0.6rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  outline: none;
+  background: white;
+}
+.customBodyPartSelect:focus { border-color: var(--color-primary); }
+
+.customAddBtn {
+  padding: 0.45rem 1rem;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.customAddBtn:hover { background: var(--color-primary-dark); }
+.customAddBtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* 하단 버튼 - 고정 */
+.footer {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--color-border);
+  background: white;
+}
+.cancelBtn {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+}
+.cancelBtn:hover { border-color: var(--color-text-secondary); }
+.saveBtn {
+  flex: 2;
+  padding: 0.75rem;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.saveBtn:hover { background: var(--color-primary-dark); }
+.saveBtn:disabled { opacity: 0.6; cursor: not-allowed; }

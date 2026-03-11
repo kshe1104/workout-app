@@ -1,0 +1,22 @@
+/* ── DashboardPage.module.css ──────────────────────────────── */
+.page { min-height: 100vh; background: var(--color-bg); }
+
+.main {
+  display: grid;
+  grid-template-columns: 400px 1fr; /* 달력 고정 너비 + 상세 나머지 */
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .main { grid-template-columns: 1fr; }
+}
+
+.calendarSection, .detailSection {
+  background: var(--color-surface);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}

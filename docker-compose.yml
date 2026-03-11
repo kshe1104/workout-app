@@ -1,0 +1,70 @@
+services:
+
+  # ── MySQL ─────────────────────────────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: workout-db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: workout_db
+      MYSQL_CHARACTER_SET_SERVER: utf8mb4
+      MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
+    ports:
+      - "3306:3306"
+    volumes:
+      # 컨테이너가 삭제되어도 DB 데이터 유지
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-rootpassword}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - workout-network
+
+  # ── Spring Boot Backend ───────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: workout-backend
+    environment:
+      # DB 접속 정보 (db 컨테이너 이름으로 접근)
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/workout_db?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
+      # 초기 데이터 로딩
+      SPRING_SQL_INIT_MODE: always
+      # JWT
+      JWT_SECRET: ${JWT_SECRET:-workoutAppSecretKeyForJwtTokenGenerationMustBeLongEnough256bits}
+      JWT_ACCESS_TOKEN_EXPIRATION: 900000
+      JWT_REFRESH_TOKEN_EXPIRATION: 604800000
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy   # DB가 준비된 후에 백엔드 시작
+    networks:
+      - workout-network
+    restart: unless-stopped
+
+  # ── React Frontend (Nginx) ────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: workout-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - workout-network
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  workout-network:
+    driver: bridge
