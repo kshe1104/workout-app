@@ -126,8 +126,11 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        // 허용할 출처 (개발 환경)
-        config.setAllowedOrigins(List.of("http://localhost:3000"));
+        // 허용할 출처: 환경변수 ALLOWED_ORIGINS에서 읽어옴
+        // 로컬 개발: http://localhost:3000 (기본값)
+        // 운영 배포: docker-compose.yml의 ALLOWED_ORIGINS 환경변수로 주입
+        String allowedOrigins = System.getenv().getOrDefault("ALLOWED_ORIGINS", "http://localhost:3000");
+        config.setAllowedOrigins(List.of(allowedOrigins.split(",")));
 
         // 허용할 HTTP 메서드
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));

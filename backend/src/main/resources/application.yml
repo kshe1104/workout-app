@@ -5,13 +5,9 @@ spring:
     # serverTimezone=Asia/Seoul: 한국 시간대 설정
     # characterEncoding=UTF-8: 한글 깨짐 방지
     url: jdbc:mysql://localhost:3306/workout_db?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: "0000"
+    username: root          # 본인 MySQL 계정으로 변경
+    password: your_password # 본인 MySQL 비밀번호로 변경
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-  sql:
-    init:
-      mode: always
 
   jpa:
     hibernate:
@@ -40,12 +36,11 @@ spring:
 
 # JWT 설정
 jwt:
-  # secret: JWT 서명에 사용하는 비밀키
-  # 실제 운영에서는 이 값을 환경변수로 관리해야 함 (절대 코드에 하드코딩 금지)
-  secret: workoutAppSecretKeyForJwtTokenGenerationMustBeLongEnough256bits
-  # Access Token 만료 시간: 15분 (밀리초)
+  # secret: 환경변수에서 읽어옴. 없으면 로컬 개발용 기본값 사용
+  # ${JWT_SECRET:기본값} → 환경변수 JWT_SECRET이 없으면 콜론 뒤 기본값 사용
+  # ⚠️  기본값은 로컬 개발 전용. 운영 환경에서는 반드시 환경변수로 주입할 것
+  secret: ${JWT_SECRET:localDevSecretKeyOnlyForDevelopmentNeverUseInProduction!}
   access-token-expiration: 900000
-  # Refresh Token 만료 시간: 7일 (밀리초)
   refresh-token-expiration: 604800000
 
 # 서버 포트 (React는 3000, Spring은 8080 - CORS 때문에 포트 구분)
