@@ -318,3 +318,20 @@ jwt:
 export DB_PASSWORD=your_password
 export JWT_SECRET=your_jwt_secret_key_must_be_at_least_32_characters
 ```
+
+------
+## 실제 서비스 화면
+
+#### 로그인
+<img width="2520" height="1337" alt="스크린샷 2026-03-11 183003" src="https://github.com/user-attachments/assets/9ed57e6f-b2bc-47ae-af17-9e755d3e5a3b" />
+
+#### 회원가입
+<img width="2524" height="1334" alt="스크린샷 2026-03-11 182950" src="https://github.com/user-attachments/assets/c120c894-08c4-4f06-864a-64e6714424d5" />
+#### 운동기록 메인
+<img width="2521" height="1336" alt="스크린샷 2026-03-11 182647" src="https://github.com/user-attachments/assets/5abfc681-3596-4a3c-8756-92aeb418a34d" />
+#### 운동 추가
+<img width="1271" height="674" alt="image" src="https://github.com/user-attachments/assets/97952058-36a1-46a1-9999-8d036dae6b27" />
+
+
+
+
