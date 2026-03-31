@@ -7,12 +7,14 @@ backend/build/
 backend/.gradle/
 backend/out/
 backend/generated/
+backend/src/main/resources/application.yml
 *.jar
 *.class
 
 # ── Frontend ──────────────────────────────────────────────────
 frontend/node_modules/
 frontend/dist/
+frontend/.env
 
 # ── IDE ───────────────────────────────────────────────────────
 .idea/

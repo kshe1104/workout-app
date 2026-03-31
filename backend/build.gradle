@@ -35,6 +35,9 @@ dependencies {
     // @Valid, @NotNull 등 입력값 검증 어노테이션 사용
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    // 챗봇을 위한 dependency
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     // ── 데이터베이스 ──────────────────────────────────────────────
     // MySQL 드라이버: Java ↔ MySQL 통신 담당
     runtimeOnly 'com.mysql:mysql-connector-j'

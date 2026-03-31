@@ -30,7 +30,7 @@ services:
     container_name: workout-backend
     environment:
       # DB 접속 정보 (db 컨테이너 이름으로 접근)
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/workout_db?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/workout_db?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true      
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
       # 초기 데이터 로딩

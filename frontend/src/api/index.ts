@@ -80,3 +80,9 @@ export const exerciseApi = {
   deleteCustom: (exerciseId: number) =>
     apiClient.delete(`/api/exercises/${exerciseId}`),
 };
+
+// 챗봇 API 함수
+export const chatApi = {
+  sendMessage: (message: string) =>
+    apiClient.post<{ reply: string }>('/api/chat', { message }),
+};

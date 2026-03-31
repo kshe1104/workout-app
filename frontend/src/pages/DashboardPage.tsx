@@ -19,6 +19,7 @@ import WorkoutDetailPanel from '../components/WorkoutDetail/WorkoutDetailPanel';
 import WorkoutForm from '../components/WorkoutForm/WorkoutForm';
 import { useWorkoutDetail } from '../hooks/useWorkout';
 import styles from './DashboardPage.module.css';
+import ChatBot from "../components/Chat/ChatBot";
 
 export default function DashboardPage() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -84,6 +85,7 @@ export default function DashboardPage() {
           onSuccess={handleFormSuccess}
         />
       )}
+      <ChatBot />
     </div>
   );
 }
